@@ -1,0 +1,32 @@
+<mat-list>
+  <div mat-subheader>Shopping cart</div>
+  <mat-list-item *ngFor="let product of order.products; let i = index">
+    <div mat-list-avatar>
+      <img class="list-image" [src]="product.image">
+    </div>
+    <div mat-line> {{product.description}} </div>
+    <div mat-line class="list-price"> ${{product.price}}.00{{order.activatedPromotionalCode ? '(-10%)' : ''}}</div>
+    <button mat-icon-button color="warn" (click)="deleteProductToCart(product)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+
+  <mat-list-item class="item-list-total">
+    <div mat-line>
+      Total
+    </div>
+    <div mat-line class="list-price"> ${{order.fullPrice}}.00{{order.activatedPromotionalCode ? '(-10%)' : ''}}</div>
+
+    <mat-form-field class="form-control-code" appearance="outline" *ngIf="order.products.length > 0">
+      <mat-label>Promotional code</mat-label>
+      <input matInput (ngModelChange)="inputCode($event)" [(ngModel)]="order.promotionalCode" name="promotionalCode"
+             [disabled]="order.activatedPromotionalCode">
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" *ngIf="order.products.length > 0" (click)="saveOrder()">
+      Next
+    </button>
+  </mat-list-item>
+
+</mat-list>

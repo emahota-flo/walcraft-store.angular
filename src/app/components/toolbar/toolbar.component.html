@@ -1,0 +1,41 @@
+<mat-toolbar class="toolbar" color="primary">
+
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+<!--    <span class="spacer"></span>-->
+    <span class="toolbar-title">Wallcraft Store</span>
+    <span class="spacer"></span>
+
+    <button mat-button class="nav-item" routerLink="product" routerLinkActive="nav-item-active">Products</button>
+    <button mat-button class="nav-item" routerLink="order" routerLinkActive="nav-item-active">Orders</button>
+    <button mat-button class="nav-item" routerLink="shopping-cart" routerLinkActive="nav-item-active">
+      <mat-icon>shopping_cart</mat-icon> ${{sumPriceProduct}}.00
+    </button>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="product">
+        <span>Products</span>
+      </button>
+      <button mat-menu-item routerLink="order">
+        <span>Orders</span>
+      </button>
+      <button mat-menu-item routerLink="shopping-cart">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>${{sumPriceProduct}}.00</span>
+      </button>
+    </mat-menu>
+
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+
+<mat-toolbar>
+  <mat-toolbar-row></mat-toolbar-row>
+</mat-toolbar>

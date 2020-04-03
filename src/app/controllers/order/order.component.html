@@ -1,0 +1,37 @@
+<div class="container">
+  <div *ngIf="orders.length === 0">
+    Order list is empty!
+  </div>
+  <mat-expansion-panel class="order-item" *ngFor="let order of orders; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Order #{{i+1}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{order.date | date:'d MMMM yyyy, HH:mm'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-list>
+      <mat-list-item *ngFor="let product of order.products; let i = index">
+        <div mat-list-avatar>
+          <img class="list-image" [src]="product.image">
+        </div>
+        <div mat-line> {{product.description}} </div>
+        <div mat-line class="list-price"> ${{product.price}}.00{{order.activatedPromotionalCode ? '(-10%)' : ''}}</div>
+      </mat-list-item>
+
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item class="item-list-total">
+        <div mat-line>
+          Total
+        </div>
+
+        <div mat-line class="list-price"> ${{order.fullPrice}}.00{{order.activatedPromotionalCode ? '(-10%)' : ''}}</div>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-expansion-panel>
+</div>

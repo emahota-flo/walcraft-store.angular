@@ -1,0 +1,8 @@
+{
+  "/v2/*": {
+    "target": "https://api.shutterstock.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

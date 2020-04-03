@@ -1,0 +1,19 @@
+mat-list {
+  overflow: hidden;
+}
+.list-image {
+  object-fit: cover;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.list-price {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.item-list-total {
+  margin-top: 2rem;
+}
+.form-control-code {
+  margin-right: 1em;
+}

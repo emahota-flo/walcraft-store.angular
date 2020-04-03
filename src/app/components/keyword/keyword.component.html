@@ -1,0 +1,15 @@
+<mat-chip-list aria-label="Fish selection" *ngIf="keywords && keywords.length > 0">
+  <div *ngFor="let keyword of keywords | slice:0:quantityKeywords">
+    <mat-chip *ngIf="!selectedKeywords.includes(keyword)" (click)="addKeyword(keyword)">
+      {{keyword}}
+    </mat-chip>
+
+    <mat-chip *ngIf="selectedKeywords.includes(keyword)" (click)="deleteKeyword(keyword)" color="accent" selected>
+      {{keyword}}
+    </mat-chip>
+  </div>
+
+
+  <mat-chip color="primary" selected (click)="quantityKeywords = quantityKeywords + 20">more</mat-chip>
+  <mat-chip *ngIf="quantityKeywords > 40" color="primary" selected (click)="quantityKeywords = 20">hide</mat-chip>
+</mat-chip-list>

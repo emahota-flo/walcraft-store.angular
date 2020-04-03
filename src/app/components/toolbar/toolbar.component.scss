@@ -1,0 +1,32 @@
+.toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-title {
+  margin-left: 1em;
+}
+.nav-item-active {
+  border: 1px solid rgba(0, 0, 0, 0.12)!important;
+}
+.nav-item {
+  border: 1px solid rgba(0, 0, 0, 0);
+  margin-left: 1em;
+}
+
+
+@media (min-width: 768px) {
+  .menu {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .nav-item {
+    display: none;
+  }
+}
+
