@@ -14,7 +14,8 @@ import {KeywordService} from '../../services/keyword.service';
 })
 export class ProductComponent implements OnInit, OnDestroy {
 
-  products$: any;
+  productsForCategory$: any;
+  productsForScroll$: any;
   products: Product[];
   productRequestParameters: ProductRequestParameters = {
     categoryId: 0,
@@ -44,7 +45,9 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.products$.unsubscribe();
+    this.productsForCategory$.unsubscribe();
+    this.productsForScroll$.unsubscribe();
+
     this.category$.unsubscribe();
     this.shoppingCart$.unsubscribe();
     this.keywords$.unsubscribe();
@@ -62,16 +65,20 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.productRequestParameters.pageNumber = 2;
     });
 
-    this.products$ = this.productService.products$
+    this.productsForCategory$ = this.productService.productsForCategory$
       .subscribe(products => {
         this.products = this.products.concat(products);
         this.keywordService.selectionKeywords(this.products);
 
-        if (products.length === 0) {
+        this.productRequestParameters.pageNumber = 2;
+      });
 
-        } else {
-          this.productRequestParameters.pageNumber += 1;
-        }
+    this.productsForScroll$ = this.productService.productsForScroll$
+      .subscribe(products => {
+        this.products = this.products.concat(products);
+        this.keywordService.selectionKeywords(this.products);
+
+        this.productRequestParameters.pageNumber += 1;
       });
   }
 
@@ -80,8 +87,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     let pos: number = document.documentElement.scrollTop + document.documentElement.offsetHeight;
     let max: number = document.documentElement.scrollHeight;
 
-    if (pos === max) {
-      this.productService.productsTerms.next(this.productRequestParameters);
+    if ((max - pos) < 2000) {
+      this.productService.productsTermsForScroll.next(this.productRequestParameters);
     }
 
     if (pos > 3000) {
@@ -107,7 +114,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.productRequestParameters.pageNumber = 1;
         this.productRequestParameters.keywords = [];
 
-        this.productService.productsTerms.next(this.productRequestParameters);
+        this.productService.productsTermsForCategory.next(this.productRequestParameters);
       });
   }
 

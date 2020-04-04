@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {catchError, debounceTime, exhaustMap, map, switchMap} from 'rxjs/operators';
 import {HttpHelperService} from './http-helper.service';
 
 import {Product} from '../models/product';
@@ -13,14 +13,24 @@ import {ProductRequestParameters} from '../models/product-request-parameters';
 export class ProductService {
 
 
-  productsTerms: Subject<any> = new Subject();
-  products$: Observable<Product[]>;
+  productsTermsForCategory: Subject<any> = new Subject();
+  productsForCategory$: Observable<Product[]>;
+
+
+  productsTermsForScroll: Subject<any> = new Subject();
+  productsForScroll$: Observable<Product[]>;
 
   constructor(private http: HttpClient,
               private httpHelper: HttpHelperService) {
 
-    this.products$ = this.productsTerms.pipe(
+    this.productsForCategory$ = this.productsTermsForCategory.pipe(
+      debounceTime(100),
       switchMap((requestParameters: ProductRequestParameters) => this.getProducts(requestParameters)),
+      catchError(err => httpHelper.handlerError(err))
+    );
+
+    this.productsForScroll$ = this.productsTermsForScroll.pipe(
+      exhaustMap((requestParameters: ProductRequestParameters) => this.getProducts(requestParameters)),
       catchError(err => httpHelper.handlerError(err))
     );
   }
