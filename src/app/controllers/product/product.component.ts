@@ -67,7 +67,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     this.productsForCategory$ = this.productService.productsForCategory$
       .subscribe(products => {
-        this.products = this.products.concat(products);
+        this.products = products;
         this.keywordService.selectionKeywords(this.products);
 
         this.productRequestParameters.pageNumber = 2;
@@ -109,7 +109,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     this.category$ = this.categoryService.selectedCategoryEvent
       .subscribe(category => {
-        this.products = [];
+        document.documentElement.scrollTop = 0;
         this.productRequestParameters.categoryId = category.id;
         this.productRequestParameters.pageNumber = 1;
         this.productRequestParameters.keywords = [];

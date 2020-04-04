@@ -20,7 +20,6 @@ export class KeywordService {
 
     this.categoryService.selectedCategoryEvent
       .subscribe(() => {
-        this.selectionKeywords([]);
         this.clearKeywords();
       });
   }
