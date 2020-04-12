@@ -4,6 +4,7 @@ import {Category} from '../models/category';
 import {catchError, map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {HttpHelperService} from './http-helper.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,9 @@ export class CategoryService {
 
 
   getCategories(): Observable<Category[]> {
-    const url = '/v2/images/categories';
+    const url = '/api/category';
     const headers = this.httpHelper.getHeaders();
-    return this.http.get(url, headers).pipe(
+    return this.http.get<Category[]>(environment.apiUrl + url, headers).pipe(
       map(response => {
         if (!localStorage.getItem('category')) {
           this.selectCategory(response['data'][0]);
@@ -37,7 +38,7 @@ export class CategoryService {
           };
         });
       }),
-      catchError(err => this.httpHelper.handlerError)
+      catchError(this.httpHelper.handlerError)
     );
   }
 

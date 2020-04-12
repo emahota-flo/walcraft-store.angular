@@ -1,48 +1,46 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Order} from '../models/order';
-import {ShoppingCartService} from './shopping-cart.service';
-import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
+import {catchError, map} from 'rxjs/operators';
+import {HttpHelperService} from './http-helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  orders: Order[] = [];
-  ordersEvent: EventEmitter<Order[]> = new EventEmitter<Order[]>();
 
-  constructor(private shoppingCartService: ShoppingCartService,
-              private router: Router) {
-    if (localStorage.getItem('order')) {
-      this.orders = JSON.parse(localStorage.getItem('order'));
-    }
+  clientId: string;
+
+  constructor(private http: HttpClient,
+              private httpHelper: HttpHelperService) {
+    this.clientId = localStorage.getItem('clientId');
   }
 
-  saveOrder(order: Order) {
-    let newOrder: Order = {
-      date: new Date(),
-      products: order.products,
-      activatedPromotionalCode: order.activatedPromotionalCode,
-      promotionalCode: order.promotionalCode,
-      fullPrice: order.fullPrice
-    };
+  saveOrder(order: Order): Observable<Order> {
+    order.clientId = this.clientId;
+    const url = environment.apiUrl + '/api/order';
+    const body = JSON.stringify(order);
+    const headers = this.httpHelper.getHeaders();
 
-    let orders: Order[] = JSON.parse(localStorage.getItem('order')) || [];
+    return this.http.post<Order>(url, body, headers).pipe(
+      map(response => {
+        this.clientId = response.clientId;
+        localStorage.setItem('clientId', response.clientId);
+        return {...response};
+      }),
+      catchError(this.httpHelper.handlerError)
+    );
+  }
 
-    if (orders) {
-      orders.push(newOrder);
-      localStorage.setItem('order', JSON.stringify(orders));
-    } else {
-      orders.push(newOrder);
-      localStorage.setItem('order', JSON.stringify(orders));
-    }
-
-    this.shoppingCartService.clearShoppingCart();
-
-    this.orders.push(newOrder);
-    this.ordersEvent.emit(this.orders);
-
-    this.router.navigate(['order']);
+  getOrder(): Observable<Order[]> {
+    const url = environment.apiUrl + '/api/order/' + this.clientId;
+    const headers = this.httpHelper.getHeaders();
+    return this.http.get<Order[]>(url, headers).pipe(
+      catchError(this.httpHelper.handlerError)
+    );
   }
 
 }

@@ -91,11 +91,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.productService.productsTermsForScroll.next(this.productRequestParameters);
     }
 
-    if (pos > 3000) {
-      this.flTopButton = true;
-    } else {
-      this.flTopButton = false;
-    }
+    this.flTopButton = pos > 3000;
   }
 
   scrollToTop() {

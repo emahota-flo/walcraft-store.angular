@@ -5,12 +5,14 @@ import {ShoppingCartComponent} from './shopping-cart.component';
 import {MaterialModule} from '../../material.module';
 import {ModalComponent} from '../../components/modal/modal.component';
 import {FormsModule} from '@angular/forms';
+import {SnackBarComponent} from '../../components/snack-bar/snack-bar.component';
 
 
 @NgModule({
   declarations: [
     ShoppingCartComponent,
-    ModalComponent
+    ModalComponent,
+    SnackBarComponent
   ],
   imports: [
     CommonModule,
