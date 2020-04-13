@@ -50,7 +50,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         data: {title: 'Order', description: 'Order price $' + this.order.fullPrice + '.00. Do you want to pay for the order?'},
         width: '300px'
       });
-
+    /**
+     * else не обязателен
+     */
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.orderService.saveOrder(this.order);

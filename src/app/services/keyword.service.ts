@@ -1,4 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {Product} from '../models/product';
 import {CategoryService} from './category.service';
 
@@ -25,6 +26,10 @@ export class KeywordService {
   }
 
   selectionKeywords(products: Product[]) {
+    /**
+     * если ты используешь переменную которой потом не переприсваиваешь новое значение
+     * используй const
+     */
     let keywords: any[] = [];
     for (let product of products) {
       for (let keyword of product.keywords) {

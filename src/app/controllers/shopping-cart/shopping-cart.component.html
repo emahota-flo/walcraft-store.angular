@@ -4,8 +4,12 @@
     <div mat-list-avatar>
       <img class="list-image" [src]="product.image">
     </div>
-    <div mat-line> {{product.description}} </div>
-    <div mat-line class="list-price"> ${{product.price}}.00{{order.activatedPromotionalCode ? '(-10%)' : ''}}</div>
+    <div mat-line>
+      {{product.description}}
+    </div>
+    <div mat-line class="list-price">
+      ${{product.price}}.00{{order.activatedPromotionalCode ? '(-10%)' : ''}}
+    </div>
     <button mat-icon-button color="warn" (click)="deleteProductToCart(product)">
       <mat-icon>delete</mat-icon>
     </button>
@@ -24,7 +28,10 @@
              [disabled]="order.activatedPromotionalCode">
     </mat-form-field>
 
-    <button mat-flat-button color="primary" *ngIf="order.products.length > 0" (click)="saveOrder()">
+    <button mat-flat-button
+            color="primary"
+            *ngIf="order.products.length > 0"
+            (click)="saveOrder()">
       Next
     </button>
   </mat-list-item>

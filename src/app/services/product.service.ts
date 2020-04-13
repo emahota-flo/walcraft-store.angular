@@ -12,7 +12,10 @@ import {ProductRequestParameters} from '../models/product-request-parameters';
 })
 export class ProductService {
 
-
+  /**
+   * Продукты для категорий и для скролла ничем не отличаются
+   * тут можно использовать одну связку
+   */
   productsTermsForCategory: Subject<any> = new Subject();
   productsForCategory$: Observable<Product[]>;
 
