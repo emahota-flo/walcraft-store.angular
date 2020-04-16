@@ -1,12 +1,13 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Category } from '../models/category';
-import { catchError, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { HttpHelperService } from './http-helper.service';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Category} from '../models/category';
+import {catchError, map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {HttpHelperService} from './http-helper.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CategoryService {
 
@@ -22,7 +23,7 @@ export class CategoryService {
 
 
   getCategories(): Observable<Category[]> {
-    const url = '/v2/images/categories';
+    const url = '/api/category';
     /**
      * TODO: для ситуаций когда ты используешь одни и теже хедеры для запросов
      * ты можешь создать сервис для запрсоов в котором ты объявляешь один раз хедеры
@@ -30,41 +31,21 @@ export class CategoryService {
      * ЛИБО ты можешь использовать HttpInterceptor который позволяет изменять исходящие запроосы
      */
     const headers = this.httpHelper.getHeaders();
-    return this.http.get(url, headers).pipe(
+    return this.http.get<Category[]>(environment.apiUrl + url, headers).pipe(
       map(response => {
         if (!localStorage.getItem('category')) {
           this.selectCategory(response['data'][0]);
         }
         // TODO: это бесполезная операция. на выходе тот же массив
         let categories = [].slice.call(response['data']);
-        // TODO:
-        return categories.map((data: any) => {
+        return categories.map(function(data: any) {
           return {
             id: data.id,
-            name: data.name,
+            name: data.name
           };
         });
       }),
-      /**
-       * TODO: это скрее всего работать не будет
-       * в стрелочной функции то просто возвращаешь метод
-       * чтобы это работало используй либо:
-       * catchError(err => this.httpHelper.handlerError(err))
-       * это вернет результат выполнения handlerError
-       * либо:
-       * catchError(this.httpHelper.handlerError)
-       * тут в качестве коллбека будет использован метод handlerError
-       * простой пример для понимая:
-       * Если есть метод
-       *
-       *   и мы используем его вот так
-       *   catchError(this.handlerError);
-       *   будет равно этому:
-       *   catchError((error)=> {
-       *     console.error(error)
-       *   })
-       */
-      catchError((err) => this.httpHelper.handlerError),
+      catchError(this.httpHelper.handlerError)
     );
   }
 
@@ -77,7 +58,4 @@ export class CategoryService {
   getSelectedCategory(): Category {
     return this.selectedCategory;
   }
-}
-function handlerError(error) {
-  console.error(error);
 }

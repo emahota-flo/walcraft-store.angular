@@ -6,6 +6,7 @@ import {HttpHelperService} from './http-helper.service';
 
 import {Product} from '../models/product';
 import {ProductRequestParameters} from '../models/product-request-parameters';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,6 @@ export class ProductService {
    */
   productsTermsForCategory: Subject<any> = new Subject();
   productsForCategory$: Observable<Product[]>;
-
 
   productsTermsForScroll: Subject<any> = new Subject();
   productsForScroll$: Observable<Product[]>;
@@ -39,7 +39,7 @@ export class ProductService {
   }
 
   getProducts(requestParameters: ProductRequestParameters): Observable<Product[]> {
-    const url = '/v2/images/search';
+    const url = '/api/product';
     const headers = this.httpHelper.getHeaders();
     const options = {
       params: new HttpParams()
@@ -51,7 +51,7 @@ export class ProductService {
       headers: headers.headers
     };
 
-    return this.http.get(url, options).pipe(
+    return this.http.get(environment.apiUrl + url, options).pipe(
       map(response => {
         let products: Product[] = [].slice.call(response['data']);
         return products.map((data: any) => {

@@ -3,5 +3,5 @@ export class Product {
   image: string;
   description: string;
   price: number;
-  keywords: any[];
+  keywords: string[];
 }
