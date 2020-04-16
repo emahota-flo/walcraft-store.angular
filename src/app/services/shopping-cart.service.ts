@@ -6,6 +6,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {debounceTime, distinctUntilChanged, map, switchMap} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
+import {PromotionalCode} from '../models/promotional-code';
 
 @Injectable({
   providedIn: 'root'
@@ -74,27 +75,26 @@ export class ShoppingCartService {
       }
     };
     this.order.products = [];
-    this.saveShoppingCart();
-  }
-
-  saveShoppingCart() {
     this.shoppingCartEvent.emit(this.order.products);
     localStorage.removeItem('shoppingCart');
   }
 
-  activatedPromotionalCode(code: string): Observable<any> {
+  saveShoppingCart() {
+    this.shoppingCartEvent.emit(this.order.products);
+    localStorage.setItem('shoppingCart', JSON.stringify(this.order));
+  }
+
+  activatedPromotionalCode(code: string): Observable<PromotionalCode> {
     const url = environment.apiUrl + '/api/promotional-code/check';
-    const headers = this.httpHelper.getHeaders();
     const options = {
       params: new HttpParams()
         .set('code', code),
-      headers: headers.headers
     };
 
-    return this.http.get<any>(url, options).pipe(
+    return this.http.get<PromotionalCode>(url, options).pipe(
       map(response => {
-        if (response.status === 1) {
-          this.order.promotionalCode = response.data;
+        if (response?.code) {
+          this.order.promotionalCode = response;
           this.order.activatedPromotionalCode = true;
           this.order.products.forEach((product) => {
             product.price =

@@ -25,7 +25,7 @@ export class KeywordService {
   }
 
   selectionKeywords(products: Product[]) {
-    let keywords: any[] = [];
+    let keywords: string[] = [];
     for (let product of products) {
       for (let keyword of product.keywords) {
         keywords.push(keyword);
@@ -57,4 +57,5 @@ export class KeywordService {
     this.selectedKeywordsEvent.emit(this.selectedKeywords);
     localStorage.removeItem('keywords');
   }
+
 }

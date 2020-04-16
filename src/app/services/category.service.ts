@@ -24,19 +24,12 @@ export class CategoryService {
 
   getCategories(): Observable<Category[]> {
     const url = '/api/category';
-    const headers = this.httpHelper.getHeaders();
-    return this.http.get<Category[]>(environment.apiUrl + url, headers).pipe(
+    return this.http.get<any>(environment.apiUrl + url).pipe(
       map(response => {
         if (!localStorage.getItem('category')) {
-          this.selectCategory(response['data'][0]);
+          this.selectCategory(response.data[0]);
         }
-        let categories = [].slice.call(response['data']);
-        return categories.map(function(data: any) {
-          return {
-            id: data.id,
-            name: data.name
-          };
-        });
+        return response.data;
       }),
       catchError(this.httpHelper.handlerError)
     );

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import {throwError} from 'rxjs';
 
 
@@ -9,14 +9,6 @@ import {throwError} from 'rxjs';
 export class HttpHelperService {
 
   constructor() {
-  }
-
-  getHeaders() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
   }
 
   handlerError(error: HttpErrorResponse) {

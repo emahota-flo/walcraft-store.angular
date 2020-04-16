@@ -22,10 +22,8 @@ export class OrderService {
   saveOrder(order: Order): Observable<Order> {
     order.clientId = this.clientId;
     const url = environment.apiUrl + '/api/order';
-    const body = JSON.stringify(order);
-    const headers = this.httpHelper.getHeaders();
 
-    return this.http.post<Order>(url, body, headers).pipe(
+    return this.http.post<Order>(url, order).pipe(
       map(response => {
         this.clientId = response.clientId;
         localStorage.setItem('clientId', response.clientId);
@@ -37,8 +35,7 @@ export class OrderService {
 
   getOrder(): Observable<Order[]> {
     const url = environment.apiUrl + '/api/order/' + this.clientId;
-    const headers = this.httpHelper.getHeaders();
-    return this.http.get<Order[]>(url, headers).pipe(
+    return this.http.get<Order[]>(url).pipe(
       catchError(this.httpHelper.handlerError)
     );
   }

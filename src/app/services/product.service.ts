@@ -36,19 +36,17 @@ export class ProductService {
   }
 
   getProducts(requestParameters: ProductRequestParameters): Observable<Product[]> {
-    const url = '/api/product';
-    const headers = this.httpHelper.getHeaders();
+    const url = environment.apiUrl + '/api/product';
     const options = {
       params: new HttpParams()
         .set('category', requestParameters.categoryId.toString())
         .set('page', requestParameters.pageNumber.toString())
         .set('per_page', '20')
         .set('view', 'full')
-        .set('query', requestParameters.keywords.slice(-1).join(' ')),
-      headers: headers.headers
+        .set('query', requestParameters.keywords.slice(-1).join(' '))
     };
 
-    return this.http.get(environment.apiUrl + url, options).pipe(
+    return this.http.get(url, options).pipe(
       map(response => {
         let products: Product[] = [].slice.call(response['data']);
         return products.map((data: any) => {

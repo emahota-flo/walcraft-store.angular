@@ -56,7 +56,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   getPromotionalCode() {
     this.promotionalCode$ = this.shoppingCartService.promotionalCode$
       .subscribe(response => {
-        if (response.status === 1) {
+        if (response?.code) {
           this.order.activatedPromotionalCode = true;
           this.order.promotionalCode = this.shoppingCartService.order.promotionalCode;
         } else {
