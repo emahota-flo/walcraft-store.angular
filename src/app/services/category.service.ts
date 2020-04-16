@@ -34,6 +34,7 @@ export class CategoryService {
     return this.http.get<Category[]>(environment.apiUrl + url, headers).pipe(
       map(response => {
         if (!localStorage.getItem('category')) {
+          // TODO: чтобы не использовать конструцию obj['prop'] добавь интерфейс для ответа на запрос
           this.selectCategory(response['data'][0]);
         }
         // TODO: это бесполезная операция. на выходе тот же массив
