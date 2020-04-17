@@ -1,4 +1,4 @@
-import { KeywordPipe } from './keyword.pipe';
+import {KeywordPipe} from './keyword.pipe';
 
 describe('KeywordPipe', () => {
   it('create an instance', () => {

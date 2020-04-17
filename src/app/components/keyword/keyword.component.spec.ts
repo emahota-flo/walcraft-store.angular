@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KeywordComponent } from './keyword.component';
+import {KeywordComponent} from './keyword.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('KeywordComponent', () => {
   let component: KeywordComponent;
@@ -8,9 +9,10 @@ describe('KeywordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KeywordComponent ]
+      imports: [HttpClientTestingModule],
+      declarations: [KeywordComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

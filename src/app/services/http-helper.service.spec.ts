@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { HttpHelperService } from './http-helper.service';
+import {HttpHelperService} from './http-helper.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('HttpHelperService', () => {
   let service: HttpHelperService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
     service = TestBed.inject(HttpHelperService);
   });
 

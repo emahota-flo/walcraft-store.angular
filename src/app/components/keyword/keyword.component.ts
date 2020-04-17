@@ -12,7 +12,7 @@ export class KeywordComponent implements OnInit, OnDestroy {
   keywords$: any;
 
   selectedKeywords$: any;
-  selectedKeywords: any[] = [];
+  selectedKeywords: string[] = [];
 
   quantityKeywords: number = 20;
 

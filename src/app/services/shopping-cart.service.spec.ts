@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ShoppingCartService } from './shopping-cart.service';
+import {ShoppingCartService} from './shopping-cart.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('OrderService', () => {
   let service: ShoppingCartService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
     service = TestBed.inject(ShoppingCartService);
   });
 

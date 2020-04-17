@@ -18,7 +18,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sumPriceProduct = this.shoppingCartService.getSumPriceProduct();
     this.getShoppingCart();
   }
 
@@ -27,6 +26,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   getShoppingCart() {
+    this.sumPriceProduct = this.shoppingCartService.getSumPriceProduct();
     this.shoppingCart$ = this.shoppingCartService.shoppingCartEvent
       .subscribe(cart => {
         this.sumPriceProduct = this.shoppingCartService.getSumPriceProduct();

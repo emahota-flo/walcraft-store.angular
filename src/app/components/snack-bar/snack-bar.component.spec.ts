@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SnackBarComponent } from './snack-bar.component';
+import {SnackBarComponent} from './snack-bar.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MAT_SNACK_BAR_DATA} from '@angular/material/snack-bar';
 
 describe('SnackBarComponent', () => {
   let component: SnackBarComponent;
@@ -8,9 +10,11 @@ describe('SnackBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SnackBarComponent ]
+      imports: [HttpClientTestingModule],
+      declarations: [SnackBarComponent],
+      providers: [{provide: MAT_SNACK_BAR_DATA, useValue: {message: 'Hi'}}]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

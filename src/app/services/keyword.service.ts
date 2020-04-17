@@ -7,11 +7,11 @@ import {CategoryService} from './category.service';
 })
 export class KeywordService {
 
-  keywords: any[];
-  keywordsEvent: EventEmitter<any[]> = new EventEmitter<any[]>();
+  keywords: string[];
+  keywordsEvent: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  selectedKeywords: any[] = [];
-  selectedKeywordsEvent: EventEmitter<any[]> = new EventEmitter<any[]>();
+  selectedKeywords: string[] = [];
+  selectedKeywordsEvent: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   constructor(private categoryService: CategoryService) {
     if (localStorage.getItem('keywords')) {

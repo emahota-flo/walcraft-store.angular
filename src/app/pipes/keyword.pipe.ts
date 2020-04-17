@@ -9,7 +9,7 @@ export class KeywordPipe implements PipeTransform {
 
   transform(products: Product[], selectedKeywords: any[]): Product[] {
 
-    let newProducts: Product[] = [];
+    const newProducts: Product[] = [];
 
     if (products && selectedKeywords.length !== 0) {
       products.forEach((product) => {
