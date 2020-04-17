@@ -33,7 +33,7 @@ export class OrderService {
     );
   }
 
-  getOrder(): Observable<Order[]> {
+  getOrders(): Observable<Order[]> {
     const url = environment.apiUrl + '/api/orders/' + this.clientId;
     return this.http.get<Order[]>(url).pipe(
       catchError(this.httpHelper.handlerError)

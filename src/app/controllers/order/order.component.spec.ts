@@ -43,7 +43,7 @@ describe('OrderComponent', () => {
       providers: [
         {
           provide: OrderService, useValue: {
-            getOrder: () => of(orders)
+            getOrders: () => of(orders)
           }
         }
       ]
