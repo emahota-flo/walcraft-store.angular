@@ -21,7 +21,7 @@ export class OrderService {
 
   saveOrder(order: Order): Observable<Order> {
     order.clientId = this.clientId;
-    const url = environment.apiUrl + '/api/order';
+    const url = environment.apiUrl + '/api/orders';
 
     return this.http.post<Order>(url, order).pipe(
       map(response => {
@@ -34,7 +34,7 @@ export class OrderService {
   }
 
   getOrder(): Observable<Order[]> {
-    const url = environment.apiUrl + '/api/order/' + this.clientId;
+    const url = environment.apiUrl + '/api/orders/' + this.clientId;
     return this.http.get<Order[]>(url).pipe(
       catchError(this.httpHelper.handlerError)
     );

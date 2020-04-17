@@ -16,17 +16,8 @@ export class ShoppingCartService {
   shoppingCartEvent: EventEmitter<Product[]> = new EventEmitter<Product[]>();
   shoppingCart: Product[] = [];
 
-  order: Order = {
-    clientId: null,
-    date: null,
-    products: [],
-    fullPrice: 0,
-    activatedPromotionalCode: false,
-    promotionalCode: {
-      code: '',
-      discountPercentage: 0
-    }
-  };
+  order = new Order(null, null, [], 0, false,
+    {code: '', discountPercentage: 0});
 
   promotionalCode$: any;
   promotionalCodeTerms: Subject<string> = new Subject<string>();
@@ -63,29 +54,15 @@ export class ShoppingCartService {
   }
 
   clearShoppingCart() {
-    this.order = {
-      clientId: null,
-      date: null,
-      products: [],
-      fullPrice: 0,
-      activatedPromotionalCode: false,
-      promotionalCode: {
-        code: '',
-        discountPercentage: 0
-      }
-    };
+    this.order = new Order(null, null, [], 0, false,
+      {code: '', discountPercentage: 0});
     this.order.products = [];
     this.shoppingCartEvent.emit(this.order.products);
     localStorage.removeItem('shoppingCart');
   }
 
-  saveShoppingCart() {
-    this.shoppingCartEvent.emit(this.order.products);
-    localStorage.setItem('shoppingCart', JSON.stringify(this.order));
-  }
-
   activatedPromotionalCode(code: string): Observable<PromotionalCode> {
-    const url = environment.apiUrl + '/api/promotional-code/check';
+    const url = environment.apiUrl + '/api/promotional-codes/check';
     const options = {
       params: new HttpParams()
         .set('code', code),
@@ -100,12 +77,14 @@ export class ShoppingCartService {
             product.price =
               Math.round(product.price - (product.price * this.order.promotionalCode.discountPercentage / 100));
           });
-
-          this.shoppingCartEvent.emit(this.order.products);
-          localStorage.setItem('shoppingCart', JSON.stringify(this.order));
+          this.saveShoppingCart();
         }
-
         return response;
       }));
+  }
+
+  saveShoppingCart() {
+    this.shoppingCartEvent.emit(this.order.products);
+    localStorage.setItem('shoppingCart', JSON.stringify(this.order));
   }
 }

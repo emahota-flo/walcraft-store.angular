@@ -25,9 +25,9 @@ export class KeywordService {
   }
 
   selectionKeywords(products: Product[]) {
-    let keywords: string[] = [];
-    for (let product of products) {
-      for (let keyword of product.keywords) {
+    const keywords: string[] = [];
+    for (const product of products) {
+      for (const keyword of product.keywords) {
         keywords.push(keyword);
       }
     }

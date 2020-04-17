@@ -14,10 +14,10 @@ import {environment} from '../../environments/environment';
 export class ProductService {
 
 
-  productsTermsForCategory: Subject<any> = new Subject();
+  productsTermsForCategory: Subject<ProductRequestParameters> = new Subject<ProductRequestParameters>();
   productsForCategory$: Observable<Product[]>;
 
-  productsTermsForScroll: Subject<any> = new Subject();
+  productsTermsForScroll: Subject<ProductRequestParameters> = new Subject<ProductRequestParameters>();
   productsForScroll$: Observable<Product[]>;
 
   constructor(private http: HttpClient,
@@ -36,7 +36,7 @@ export class ProductService {
   }
 
   getProducts(requestParameters: ProductRequestParameters): Observable<Product[]> {
-    const url = environment.apiUrl + '/api/product';
+    const url = environment.apiUrl + '/api/products';
     const options = {
       params: new HttpParams()
         .set('category', requestParameters.categoryId.toString())

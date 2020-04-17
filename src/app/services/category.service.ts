@@ -23,7 +23,7 @@ export class CategoryService {
 
 
   getCategories(): Observable<Category[]> {
-    const url = '/api/category';
+    const url = '/api/categories';
     return this.http.get<any>(environment.apiUrl + url).pipe(
       map(response => {
         if (!localStorage.getItem('category')) {
