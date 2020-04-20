@@ -10,7 +10,8 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('wallcraft-store app is running!');
+    console.log(page.getTitleText());
+    expect(page.getTitleText()).toEqual('Wallcraft Store');
   });
 
   afterEach(async () => {
