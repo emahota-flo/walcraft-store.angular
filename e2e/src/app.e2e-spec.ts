@@ -8,10 +8,14 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display Wallcraft Store', () => {
     page.navigateTo();
-    console.log(page.getTitleText());
     expect(page.getTitleText()).toEqual('Wallcraft Store');
+  });
+
+  it('should be 20 cards', () => {
+    page.navigateTo();
+    expect(page.getProducts().count()).toBe(20);
   });
 
   afterEach(async () => {
